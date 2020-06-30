@@ -2,7 +2,7 @@ $(function () {
   getuserinfo()
   let layer = layui.layer
   $('#btnlogout').on('click', function () {
-    layer.confirm('确定退出登录?', { icon: 3, title: '提示' }, function(index) {
+    layer.confirm('确定退出登录?', { icon: 3, title: '提示' }, function (index) {
       //do something
       // 1. 清空本地存储中的 token
       localStorage.removeItem('token')
@@ -20,21 +20,32 @@ function getuserinfo() {
     url: '/my/userinfo',
     success: function (res) {
       // console.log(res)
-      if(res.status !==0) return res.message
+      if (res.status !== 0) return res.message
       renderAvatar(res.data)
     }
   })
 }
 
 function renderAvatar(user) {
-  const name = user.nickname || user.username
-  $('.welcome').html(`欢迎&nbsp;&nbsp;${name}`)
-  if (!user.user_pic) {
+  // console.log(user)
+  const { nickname, username, user_pic } = user
+  let sname = nickname || username
+  $('.welcome').html(`欢迎&nbsp;&nbsp;${sname}`)
+  if (!user_pic) {
     $('.layui-nav-img').hide()
     const first = name[0].toUpperCase()
     $('.textAvatar').html(first).show()
   } else {
-    $('.layui-nav-img').attr('src', user.user_pic).show()
-    $('.text-avatar').hide()
+    $('.textAvatar').hide()
+    $('.layui-nav-img').attr('src', user_pic).show()
   }
+
+  // if (user_pic !== null || user_pic !== undefined) {
+  //   $('.text-avatar').hide()
+  //   $('.layui-nav-img').attr('src', user.user_pic).show()
+  // } else {
+  //   $('.layui-nav-img').hide()
+  //   const first = name[0].toUpperCase()
+  //   $('.textAvatar').html(first).show()
+  // }
 }
