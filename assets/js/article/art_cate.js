@@ -57,7 +57,8 @@ $(function() {
       content: $('#dialog-edit').html()
     })
 
-    var id = $(this).attr('data-id')
+    // var id = $(this).attr('data-id')
+    const id = $(this).data('id')
     // 发起请求获取对应分类的数据
     $.ajax({
       method: 'GET',
